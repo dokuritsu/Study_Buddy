@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHandler";
 
@@ -17,14 +19,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "StudyBuddyDB";
 
     //Database Table Name
-    private static final String TABLE_NAME = "StudyBuddyTable";
+    private static final String TABLE_NAME = "UserTable";
 
     //Database Columns (For now)
-    private static final String USER_ID = "user_id";
-    private static final String USER_FNAME = "user_firstName";
-    private static final String USER_LNAME = "user_lastName";
-    private static final String USER_EMAIL = "user_email";
-    private static final String USER_PASSWORD = "user_password";
+    private static final String USER_ID = "User_id";
+    private static final String USER_FNAME = "User_firstName";
+    private static final String USER_LNAME = "User_lastName";
+    private static final String USER_EMAIL = "User_email";
+    private static final String USER_PASSWORD = "User_password";
 
     //Creating table
     private static final String SQL_CREATE_TABLE =
@@ -35,15 +37,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     USER_EMAIL + " TEXT," +
                     USER_PASSWORD + " TEXT" + ")";
 
+    private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
+    private SQLiteDatabase database;
+
+
+    DatabaseHandler(Context context){
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        database = getWritableDatabase();
+        Log.d(TAG, "DatabaseHandler: Constructor finished");
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        //Note: onCreate only called if database does not exist
+        Log.d(TAG, "onCreate: Making a new StudentUser Database");
+        db.execSQL(SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        Log.d(TAG, "onUpgrade: Dropping user table");
+        db.execSQL(DROP_USER_TABLE);
+        onCreate(db);
     }
 }
