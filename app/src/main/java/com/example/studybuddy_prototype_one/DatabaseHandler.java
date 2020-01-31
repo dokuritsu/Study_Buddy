@@ -61,4 +61,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(DROP_USER_TABLE);
         onCreate(db);
     }
+
+    //Adding user
+    public void addUser(StudentUser user){
+        Log.d(TAG, "addUser: Adding a new user");
+        ContentValues values = new ContentValues();
+        values.put(USER_FNAME, user.getFirstName());
+        values.put(USER_LNAME, user.getLastName());
+        values.put(USER_EMAIL, user.getEmail());
+        values.put(USER_PASSWORD, user.getPassword());
+
+        database.insert(TABLE_NAME, null, values);
+        Log.d(TAG, "addUser: Added new user");
+    }
 }
