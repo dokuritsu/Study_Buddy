@@ -48,6 +48,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Log.d(TAG, "DatabaseHandler: Constructor finished");
     }
 
+//    When the application turns on, it will call upon this function to generate the saved database
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Note: onCreate only called if database does not exist
@@ -65,13 +66,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Adding user
     public void addUser(StudentUser user){
         Log.d(TAG, "addUser: Adding a new user");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //This grabs the current values within the activity that have
         ContentValues values = new ContentValues();
+
+        //Adds this specifications
         values.put(USER_FNAME, user.getFirstName());
         values.put(USER_LNAME, user.getLastName());
         values.put(USER_EMAIL, user.getEmail());
         values.put(USER_PASSWORD, user.getPassword());
 
+        //Insert new user row in table
         database.insert(TABLE_NAME, null, values);
         Log.d(TAG, "addUser: Added new user");
+    }
+
+    //Updating user
+    public void updateUser(StudentUser user){
+
+        SQLiteDatabase db = getWritableDatabase();
     }
 }
