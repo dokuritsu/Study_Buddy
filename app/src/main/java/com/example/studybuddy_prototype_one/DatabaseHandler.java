@@ -87,7 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Updating user
     public void updateUser(StudentUser user){
         Log.d(TAG, "updateUser: Updating old user");
-        SQLiteDatabase database = getWritableDatabase();
+        SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(USER_FNAME, user.getFirstName());
@@ -98,5 +98,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //Update row by checking if the userID given matches the userID within database
         database.update(TABLE_NAME, values, USER_ID + " = ?", new String[]{String.valueOf(user.getUser_id())});
         database.close();
+    }
+
+    //Verifying user's existence
+    public boolean checkUser(String email){
+        Log.d(TAG, "checkUser: Verifying user exists");
+        String[] users = {USER_ID};
+
+        //Notice this is readable; We don't want to edit the current database by verifying user
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        //Create selection criteria
+        String selection = USER_EMAIL + " = ?";
+
+        //Create argument
+        String[] argument = {email};
+
+        //Query with condition
+        Cursor cursor = database.query(TABLE_NAME,
+                users,
+                selection,
+                argument,
+                null,
+                null,
+                null);
+        return false;
     }
 }
