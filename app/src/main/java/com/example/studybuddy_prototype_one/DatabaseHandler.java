@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.icu.text.LocaleDisplayNames;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -66,7 +67,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Adding user
     public void addUser(StudentUser user){
         Log.d(TAG, "addUser: Adding a new user");
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase database = this.getWritableDatabase();
 
         //This grabs the current values within the activity that have
         ContentValues values = new ContentValues();
@@ -79,12 +80,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         //Insert new user row in table
         database.insert(TABLE_NAME, null, values);
+        database.close();
         Log.d(TAG, "addUser: Added new user");
     }
 
     //Updating user
     public void updateUser(StudentUser user){
+        Log.d(TAG, "updateUser: Updating old user");
+        SQLiteDatabase database = getWritableDatabase();
 
-        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(USER_FNAME, user.getFirstName());
+        values.put(USER_LNAME, user.getLastName());
+        values.put(USER_EMAIL, user.getEmail());
+        values.put(USER_PASSWORD, user.getPassword());
+
+        //Update row by checking if the userID given matches the userID within database
+        database.update(TABLE_NAME, values, USER_ID + " = ?", new String[]{String.valueOf(user.getUser_id())});
+        database.close();
     }
 }
