@@ -126,9 +126,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //Check the count of cursor
         //If greater than 0, then user does exist
         int cursorCount = cursor.getCount();
+        cursor.close();
+        database.close();
         if (cursorCount > 0){
             return true;
         }
         return false;
     }
+
+    //Deleting a user (for testing or other reasons)
+    public void deleteUser(StudentUser user){
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        database.delete(TABLE_NAME, USER_ID + " = ?", new String[]{String.valueOf(user.getUser_id())});
+        database.close();
+    }
+
+
 }
