@@ -122,6 +122,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 null,
                 null,
                 null);
+
+        //Check the count of cursor
+        //If greater than 0, then user does exist
+        int cursorCount = cursor.getCount();
+        if (cursorCount > 0){
+            return true;
+        }
         return false;
     }
 }
