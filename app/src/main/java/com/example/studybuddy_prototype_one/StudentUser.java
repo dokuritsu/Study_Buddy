@@ -12,6 +12,9 @@ public class StudentUser {
     private String password;
     private ArrayList<Course> courses;
 
+    public StudentUser(){
+
+    }
     public StudentUser(int user_id, String firstName, String lastName, String email, String password, ArrayList<Course> courses) {
         this.user_id = user_id;
         this.firstName = firstName;
