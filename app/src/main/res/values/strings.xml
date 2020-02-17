@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Study Buddy - Prototype_One</string>
+    <string name="Course_One"> Course 1 </string>
+    <string name="Course_Two"> Course 2 </string>
+    <string name="Course_Three"> Course 3 </string>
+    <string name="Course_Four"> Course 4 </string>
+    <string name="Course_Five"> Course 5 </string>
+    <string name="Course_Six"> Course 6 </string>
+    <string name="Dash_Header"> This week's study progress: </string>
 </resources>
