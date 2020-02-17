@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: Moving to CreateProfile Activity");
                 Toast.makeText(MainActivity.this, "Attempting to create new account", Toast.LENGTH_SHORT).show();
                 Intent createProfile = new Intent(MainActivity.this, CreateProfile.class);
                 startActivity(createProfile);
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: Moving to Dashboard Activity");
                 Intent dashboard = new Intent(MainActivity.this, Dashboard.class);
                 startActivity(dashboard);
             }

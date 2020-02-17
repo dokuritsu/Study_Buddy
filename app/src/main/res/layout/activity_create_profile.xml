@@ -6,4 +6,74 @@
     android:layout_height="match_parent"
     tools:context=".CreateProfile">
 
+    <EditText
+        android:id="@+id/create_first_name"
+        android:layout_width="310dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:hint="Please Enter First Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/create_last_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:hint="Please Enter Last Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/create_first_name"
+        app:layout_constraintStart_toStartOf="@+id/create_first_name"
+        app:layout_constraintTop_toBottomOf="@+id/create_first_name" />
+
+    <EditText
+        android:id="@+id/create_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:hint="Please Enter Email Address"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="@+id/create_last_name"
+        app:layout_constraintStart_toStartOf="@+id/create_last_name"
+        app:layout_constraintTop_toBottomOf="@+id/create_last_name" />
+
+    <EditText
+        android:id="@+id/create_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:hint="Please Enter Password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/create_email"
+        app:layout_constraintStart_toStartOf="@+id/create_email"
+        app:layout_constraintTop_toBottomOf="@+id/create_email" />
+
+    <EditText
+        android:id="@+id/create_confirm_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/create_password"
+        app:layout_constraintStart_toStartOf="@+id/create_password"
+        app:layout_constraintTop_toBottomOf="@+id/create_password" />
+
+    <Button
+        android:id="@+id/create_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_confirm_password"
+        app:layout_constraintVertical_bias="0.317" />
 </androidx.constraintlayout.widget.ConstraintLayout>
