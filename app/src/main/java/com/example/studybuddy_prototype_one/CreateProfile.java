@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CreateProfile extends AppCompatActivity implements View.OnClickListener {
 
@@ -76,6 +79,64 @@ public class CreateProfile extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    //Function to post new user data to database
+    public void postData(){
+        Log.d(TAG, "postData: Checking if all fields are filled");
+        //Check if all fields are filled
+        isEmptyFields();
+
+        Log.d(TAG, "postData: Checking if email is valid");
+        //Check if the email is valid by comparing to email pattern
+        final String checkEmail = email.getText().toString().trim();
+        final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(checkEmail.matches(emailPattern) && s.length() > 0){
+                    Toast.makeText(appCompatActivity, "Valid email address", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(appCompatActivity, "Invalid email address", Toast.LENGTH_SHORT);
+                }
+            }
+        });
+
+        Log.d(TAG, "postData: Checking if password matches");
+        //Check if password matches
+        final String checkPassword = password.getText().toString().trim();
+        final String checkConfirmPassword = confirmPassword.getText().toString().trim();
+        if(checkPassword != checkConfirmPassword){
+            Toast.makeText(appCompatActivity, "Password do not match", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(appCompatActivity, "Passwords match", Toast.LENGTH_SHORT).show();
+        }
+
+        //If the email hasn't been used before...
+        if(!databaseHandler.checkUser(email.getText().toString().trim())){
+            //Set the user's info
+            newUser.setFirstName(firstName.getText().toString().trim());
+            newUser.setLastName(lastName.getText().toString().trim());
+            newUser.setEmail(email.getText().toString().trim());
+            newUser.setPassword(password.getText().toString().trim());
+
+            //Add user to database
+            databaseHandler.addUser(newUser);
+
+            Toast.makeText(appCompatActivity, "Successfully created account", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(appCompatActivity, "Error: Email already exists", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onClick(View v) {
         Log.d(TAG, "onClick: Want to either create account or login into account");
@@ -86,7 +147,7 @@ public class CreateProfile extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.create_accident:
                 //Go back to the login page
-                Intent login = new Intent(CreateProfile.this, MainActivity.this);
+                Intent login = new Intent(CreateProfile.this, MainActivity.class);
                 startActivity(login);
                 break;
         }
