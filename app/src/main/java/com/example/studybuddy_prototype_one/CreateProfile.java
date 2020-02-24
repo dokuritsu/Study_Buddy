@@ -2,6 +2,7 @@ package com.example.studybuddy_prototype_one;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class CreateProfile extends AppCompatActivity {
+public class CreateProfile extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "CreateProfile";
     private final AppCompatActivity appCompatActivity = CreateProfile.this;
@@ -41,9 +42,13 @@ public class CreateProfile extends AppCompatActivity {
         createUser = findViewById(R.id.create_profile);
         alreadyMember = findViewById(R.id.create_accident);
 
+        //Initialize the listeners
+        createUser.setOnClickListener(this);
+        alreadyMember.setOnClickListener(this);
+
         //Since we are creating a new user, a new student object is created
-        newUser = new StudentUser();
         databaseHandler = new DatabaseHandler(appCompatActivity);
+        newUser = new StudentUser();
 
 
     }
@@ -70,4 +75,22 @@ public class CreateProfile extends AppCompatActivity {
             return true;
         }
     }
+
+    @Override
+    public void onClick(View v) {
+        Log.d(TAG, "onClick: Want to either create account or login into account");
+        switch (v.getId()){
+            case R.id.create_profile:
+                //Call database to register the new user
+                postData();
+                break;
+            case R.id.create_accident:
+                //Go back to the login page
+                Intent login = new Intent(CreateProfile.this, MainActivity.this);
+                startActivity(login);
+                break;
+        }
+    }
+
+
 }
