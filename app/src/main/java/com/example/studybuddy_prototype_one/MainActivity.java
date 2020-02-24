@@ -46,7 +46,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void verifyUser(){
         //Check if email and password are filled
         if(isEmptyFields()){
-
+            //Check the database to see if user exists
+            if(databaseHandler.checkUser(email.getText().toString().trim())){
+                //If user exists, proceed to login
+                Intent login = new Intent(MainActivity.this, Dashboard.class);
+                startActivity(login);
+            }
         }
     }
 
