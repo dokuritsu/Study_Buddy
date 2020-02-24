@@ -131,6 +131,9 @@ public class CreateProfile extends AppCompatActivity implements View.OnClickList
                 databaseHandler.addUser(newUser);
 
                 Toast.makeText(appCompatActivity, "Successfully created account", Toast.LENGTH_SHORT).show();
+
+                Intent dashboard = new Intent(CreateProfile.this, Dashboard.class);
+                startActivity(dashboard);
             } else {
                 Toast.makeText(appCompatActivity, "Error: Email already exists", Toast.LENGTH_SHORT).show();
             }
