@@ -51,7 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //If user exists, proceed to login
                 Intent login = new Intent(MainActivity.this, Dashboard.class);
                 startActivity(login);
+            } else {
+                Toast.makeText(this, "Email is not registered. Please create an account.", Toast.LENGTH_SHORT).show();
             }
+        } else {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
         }
     }
 
