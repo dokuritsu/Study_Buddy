@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "MainActivity";
     
@@ -35,28 +35,46 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.login_button);
         newUser = findViewById(R.id.login_register);
 
-        //Create new user
-        newUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //Initialize listeners
+        login.setOnClickListener(this);
+        newUser.setOnClickListener(this);
+
+        //Initialize objects to be used
+        databaseHandler = new DatabaseHandler(this);
+    }
+
+    public void verifyUser(){
+        //Check if email and password are filled
+        if(isEmptyFields()){
+
+        }
+    }
+
+    //Function to check if all fields are filled
+    public boolean isEmptyFields(){
+        if(email.getText().toString().isEmpty()){
+            email.setError("Please enter a email");
+            return false;
+        } else if(password.getText().toString().isEmpty()){
+            password.setError("Please enter a password");
+            return false;
+        } else {
+            Log.d(TAG, "isEmptyFields: All fields have been filled");
+            return true;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.login_button:
+                verifyUser();
+                break;
+            case R.id.login_register:
                 Log.d(TAG, "onClick: Moving to CreateProfile Activity");
                 Toast.makeText(MainActivity.this, "Attempting to create new account", Toast.LENGTH_SHORT).show();
                 Intent createProfile = new Intent(MainActivity.this, CreateProfile.class);
                 startActivity(createProfile);
-//
-            }
-        });
-
-        //Login to dashboard
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: Moving to Dashboard Activity");
-                Intent dashboard = new Intent(MainActivity.this, Dashboard.class);
-                startActivity(dashboard);
-            }
-        });
-
-        databaseHandler = new DatabaseHandler(this);
+        }
     }
 }
